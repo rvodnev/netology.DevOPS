@@ -1,4 +1,3 @@
-
 ## Как сдавать задания
 
 Обязательными к выполнению являются задачи без указания звездочки. Их выполнение необходимо для получения зачета и диплома о профессиональной переподготовке.
@@ -20,9 +19,10 @@
 
 [Как запустить  Safari в режиме инкогнито ](https://support.apple.com/ru-ru/guide/safari/ibrw1069/mac)
 
-Любые вопросы по решению задач задавайте в чате Slack.
+Любые вопросы по решению задач задавайте в чате учебной группы.
 
 ---
+
 
 # Домашнее задание к занятию «1.1. Введение в DevOps»
 
@@ -31,7 +31,7 @@
 Вы пришли на новое место работы или приобрели новый компьютер.
 Первым делом надо настроить окружение для дальнейшей работы. 
 
-1. Установить PyCharm Community Edition: https://www.jetbrains.com/ru-ru/pycharm/download/ - это бесплатная версия IDE. 
+1. Установить Py Charm Community Edition: https://www.jetbrains.com/ru-ru/pycharm/download/ - это бесплатная версия IDE. 
 Если у вас уже установлен любой другой продукт от JetBrains,то можно использовать его. 
 1. Установить плагины:
     - Terraform,
@@ -39,7 +39,7 @@
     - Yaml/Ansible Support,
     - Jsonnet.
 1. Склонировать текущий репозиторий или просто создать файлы для проверки плагинов:
-    - [netology.tf](netology.tf) – terraform,
+    - [netology.tf](netology.tf) – терраформ,
     - [netology.sh](netology.sh) – bash,
     - [netology.md](netology.md) – markdown, 
     - [netology.yaml](netology.yaml) – yaml,
