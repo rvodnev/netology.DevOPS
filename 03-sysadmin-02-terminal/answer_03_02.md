@@ -202,6 +202,96 @@ vagrant@vagrant:~$ ls | wc -l
 ```bash
  rm {1..100000}
 ```
+
+Повторное Решение п.13
+
+pts/9
+```bash
+vagrant@vagrant:~$ tty
+/dev/pts/0
+vagrant@vagrant:~$ echo 0 > /proc/sys/kernel/yama/ptrace_scope
+vagrant@vagrant:~$ top
+top - 07:26:07 up 34 min,  2 users,  load average: 0.05, 0.05, 0.07
+Tasks: 125 total,   1 running, 124 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  1.2 us,  2.4 sy,  0.0 ni, 95.2 id,  0.0 wa,  0.0 hi,  1.2 si,  0.0 st
+MiB Mem :   1987.1 total,   1230.9 free,    151.7 used,    604.6 buff/cache
+MiB Swap:    980.0 total,    980.0 free,      0.0 used.   1669.1 avail Mem
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+    827 netdata   20   0   53276   3584   2008 S   5.0   0.2   0:36.56 apps.plugin
+   2558 vagrant   20   0   11852   3668   3160 R   5.0   0.2   0:00.01 top
+      1 root      20   0  167368  11456   8500 S   0.0   0.6   0:01.60 systemd
+      2 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kthreadd
+      3 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_gp
+      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_par_gp
+      6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/0:0H
+      9 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 mm_percpu_wq
+     10 root      20   0       0      0      0 S   0.0   0.0   0:00.02 ksoftirqd/0
+     11 root      20   0       0      0      0 I   0.0   0.0   0:00.41 rcu_sched
+     12 root      rt   0       0      0      0 S   0.0   0.0   0:00.03 migration/0
+     13 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 idle_inject/0
+     14 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/0
+     15 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/1
+     16 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 idle_inject/1
+     17 root      rt   0       0      0      0 S   0.0   0.0   0:00.35 migration/1
+     18 root      20   0       0      0      0 S   0.0   0.0   0:00.03 ksoftirqd/1
+     20 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/1:0H-kblockd
+     21 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/2
+     22 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 idle_inject/2
+     23 root      rt   0       0      0      0 S   0.0   0.0   0:00.36 migration/2
+     24 root      20   0       0      0      0 S   0.0   0.0   0:00.03 ksoftirqd/2
+     26 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/2:0H-kblockd
+[1]+  Stopped                 top
+vagrant@vagrant:~$ ps -a
+    PID TTY          TIME CMD
+   2558 pts/0    00:00:00 top
+   2559 pts/0    00:00:00 ps
+vagrant@vagrant:~$
+vagrant@vagrant:~$ ps -a
+    PID TTY          TIME CMD
+   2560 pts/1    00:00:00 screen
+   2569 pts/2    00:00:00 reptyr
+   2570 pts/0    00:00:00 top <defunct>
+   2571 pts/0    00:00:00 ps
+vagrant@vagrant:~$ pstree
+systemd─┬─VBoxService───8*[{VBoxService}]
+        ├─accounts-daemon───2*[{accounts-daemon}]
+        ├─agetty
+        ├─atd
+        ├─cron
+        ├─dbus-daemon
+        ├─fwupd───4*[{fwupd}]
+        ├─irqbalance───{irqbalance}
+        ├─multipathd───6*[{multipathd}]
+        ├─netdata─┬─apps.plugin
+        │         ├─bash
+        │         ├─nfacct.plugin
+        │         └─20*[{netdata}]
+        ├─networkd-dispat
+        ├─node_exporter───4*[{node_exporter}]
+        ├─polkitd───2*[{polkitd}]
+        ├─rpcbind
+        ├─rsyslogd───3*[{rsyslogd}]
+        ├─screen───bash───reptyr
+        ├─sshd───sshd───sshd───bash─┬─pstree
+        │                           └─top───top
+        ├─systemd───(sd-pam)
+        ├─systemd-journal
+        ├─systemd-logind
+        ├─systemd-network
+        ├─systemd-resolve
+        └─systemd-udevd
+
+```
+pts/1
+```bash
+vagrant@vagrant:~$ tty
+/dev/pts/1
+screen
+reptyr 2558
+---
+```
+
 14. `sudo echo string > /root/new_file` не даст выполнить перенаправление под обычным пользователем, так как перенаправлением занимается процесс shell'а, который запущен без `sudo` под вашим пользователем. Для решения данной проблемы можно использовать конструкцию `echo string | sudo tee /root/new_file`. Узнайте что делает команда `tee` и почему в отличие от `sudo echo` команда с `sudo tee` будет работать.
 
 
